@@ -29,5 +29,5 @@ with open("metrics.txt", "w") as outfile:
     outfile.write(metrics)
 
 # Plot it
-disp = plot_confusion_matrix(clf, X_test, y_test, normalize="true", cmap=plt.cm.Blues)
+disp = plot_confusion_matrix(clf, X_test, y_test, cmap=plt.cm.Blues)
 plt.savefig("plot.png")
