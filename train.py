@@ -1,10 +1,10 @@
 import json
 import os
-
 from sklearn.ensemble import RandomForestClassifier
-from sklearn.metrics import plot_confusion_matrix
+from sklearn.metrics import confusion_matrix
 import matplotlib.pyplot as plt
 import numpy as np
+
 
 # Read in data
 X_train = np.genfromtxt("data/train_features.csv")
@@ -20,6 +20,7 @@ clf.fit(X_train, y_train)
 acc = clf.score(X_test, y_test)
 print(acc)
 
+
 metrics = """
 Accuracy: {:10.4f}
 
@@ -28,6 +29,17 @@ Accuracy: {:10.4f}
 with open("metrics.txt", "w") as outfile:
     outfile.write(metrics)
 
-# Plot it
-disp = plot_confusion_matrix(clf, X_test, y_test, cmap=plt.cm.Blues)
+# Compute the confusion matrix
+y_pred = clf.predict(X_test)
+cm = confusion_matrix(y_test, y_pred)
+
+# Plot the confusion matrix
+plt.imshow(cm, cmap=plt.cm.Blues)
+plt.colorbar()
+plt.xticks(np.arange(5), np.arange(5))
+plt.yticks(np.arange(5), np.arange(5))
+plt.xlabel('Predicted label')
+plt.ylabel('True label')
+plt.title('Confusion matrix')
 plt.savefig("plot.png")
+
